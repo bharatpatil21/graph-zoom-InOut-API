@@ -16,7 +16,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   // install middleware
   require('./middlewares/dbconnect').initialize(app);
-  require('./middlewares/initial-data-load').initialize(app);
+  // require('./middlewares/initial-data-load').initialize(app);
   swaggerExpress.register(app);
 
   var port = process.env.PORT || 10010;
