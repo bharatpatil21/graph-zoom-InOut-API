@@ -1,0 +1,92 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: My Graph App
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /graph:
+    x-swagger-router-controller: graph
+    get:
+      tags:
+        - graph
+      operationId: getGraphData
+      summary: Get graph data
+      description: Get graph data
+      responses:
+        '200':
+          description: Graph list
+          schema:
+            $ref: "#/definitions/GraphDataResponse"
+        default:
+          description: An error occurred
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  SuccessResponse:
+    required:
+      - statusCode
+      - message
+      - data
+    properties:
+      statusCode:
+        type: number
+      message:
+        type: string
+      data:
+        type: ["array", "object"]
+
+  ErrorResponse:
+    required:
+      - statusCode
+      - error
+      - message
+    properties:
+      statusCode:
+        type: number
+      error:
+        type: string
+      message:
+        type: string
+
+  GraphDataResponse:
+    required:
+      - statusCode
+      - message
+      - data
+    properties:
+      statusCode:
+        type: number
+      message:
+        type: string
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/GraphResponse'
+  
+  GraphResponse:
+    properties:
+      x:
+        type: string
+        description: Graph's date
+      y:
+        type: string
+        description: Graph's value
+      
